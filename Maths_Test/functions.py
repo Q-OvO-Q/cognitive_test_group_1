@@ -96,7 +96,7 @@ def wait_for_pause(timeout=-1.0, interval=0.001, max_rate=20.0, allow_interupt=T
     return
 
 
-def metrics(time_output, difficulty_output, accuracy_output, test_output, info_output, allowed_time=15):
+def metrics(time_output, difficulty_output, accuracy_output, test_output, info_output, allowed_time=180):
     """Disaply & update test metrics in real-time"""
     global DIFFICULTY, PAUSED, RESPONSED
     time_remaining = allowed_time
