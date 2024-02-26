@@ -300,7 +300,9 @@ def send_to_google_form(data_dict, form_url):
     
     post_result = requests.post(post_form_url, data=form_dict)
     return post_result.ok
-def memory_test()
+
+# Main function for the memory test 
+def memory_test():
     total_time = 0
     total_correct_answers = 0 
     # 
