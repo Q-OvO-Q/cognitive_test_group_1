@@ -1,4 +1,4 @@
-# Compared to the first submission of codes, I made following improvements 
+# Compared to the first submission of codes, following improvements are made
 1. added consent on data usage.
 2. used anonymous ID instead of real-name system (student ID).
 3. expand the question banks to eight questions.
