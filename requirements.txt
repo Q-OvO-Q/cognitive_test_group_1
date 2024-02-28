@@ -1,5 +1,10 @@
+time
+json
 numpy
 pandas
+requests
 matplotlib
 ipywidgets
 jupyter_ui_poll
+IPython.display
+bs4 (BeautifulSoup)
