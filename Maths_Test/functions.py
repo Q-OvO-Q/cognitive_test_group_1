@@ -3,27 +3,27 @@ import random
 import requests
 import json
 import ipywidgets as widgets
-import pandas as pd
 from jupyter_ui_poll import ui_events
 from IPython.display import display, clear_output, HTML
 from bs4 import BeautifulSoup
 
-#Setting Seed
-random.seed(1)
-
+# Setting Seed
+random.seed(2)
 
 # VARIABLES
-event_info_dict = {'type': ["start",], 'description': ["program started",], 'time': [time.asctime(time.localtime(time.time())),]}
-accuracy_dict = {'easy_correct': 0, 'easy_total': 0, 'medium_correct': 0, 'medium_total': 0, 'hard_correct': 0, 'hard_total': 0}
+event_info_dict = {'type': ["start", ], 'description': ["program started", ],
+                   'time': [time.asctime(time.localtime(time.time())), ]}
+accuracy_dict = {'easy_correct': 0, 'easy_total': 0, 'medium_correct': 0, 'medium_total': 0, 'hard_correct': 0,
+                 'hard_total': 0}
 qas_dict = {'question': [], 'answer': [], 'is_correct': [], 'time_taken': []}
-RESPONSED = False
+RESPONDED = False
 PAUSED = False
 DIFFICULTY = ""
 
 
 # INTERACTIONS
-def wait_for_response(timeout=-1.0, interval=0.001, max_rate=20.0, allow_interupt=True):
-    global RESPONSED
+def wait_for_response(timeout=-1.0, interval=0.001, max_rate=20.0, allow_interrupt=True):
+    global RESPONDED
     start_wait = time.time()
     n_proc = int(max_rate * interval) + 1
     with ui_events() as ui_poll:
@@ -32,55 +32,55 @@ def wait_for_response(timeout=-1.0, interval=0.001, max_rate=20.0, allow_interup
             ui_poll(n_proc)
             if (timeout != -1.0) and (time.time() > start_wait + timeout):
                 keep_looping = False
-            if allow_interupt == True and RESPONSED == True:
+            if allow_interrupt == True and RESPONDED == True:
                 keep_looping = False
             time.sleep(interval)
-    RESPONSED = False
+    RESPONDED = False
     return
 
 
 def register_button(btn):
     """Callback function for button widget click event"""
-    global RESPONSED
+    global RESPONDED
     event_info_dict['type'].append("button_click")
     event_info_dict['description'].append(btn.description)
     event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
-    RESPONSED = True
+    RESPONDED = True
     return
 
 
 def register_text(change):
     """Callback function for text widget change event"""
-    global RESPONSED
+    global RESPONDED
     event_info_dict['type'].append("text_submit")
     event_info_dict['description'].append(change['new'])
     event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
-    RESPONSED = True
+    RESPONDED = True
     return
 
 
 def register_dropdown(change):
     """Callback function for dropdown widget change event"""
-    global RESPONSED
+    global RESPONDED
     event_info_dict['type'].append("dropdown_select")
     event_info_dict['description'].append(change['new'])
     event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
-    RESPONSED = True
+    RESPONDED = True
     return
 
 
 def force_submit():
     """Stop wait_for_response function"""
-    global RESPONSED
+    global RESPONDED
     event_info_dict['type'].append("force_submit")
     event_info_dict['description'].append("time out")
     event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
-    RESPONSED = True
+    RESPONDED = True
     return
 
 
 # TEST
-def wait_for_pause(timeout=-1.0, interval=0.001, max_rate=20.0, allow_interupt=True):
+def wait_for_pause(timeout=-1.0, interval=0.001, max_rate=20.0, allow_interrupt=True):
     global PAUSED
     start_wait = time.time()
     n_proc = int(max_rate * interval) + 1
@@ -90,55 +90,59 @@ def wait_for_pause(timeout=-1.0, interval=0.001, max_rate=20.0, allow_interupt=T
             ui_poll(n_proc)
             if (timeout != -1.0) and (time.time() > start_wait + timeout):
                 keep_looping = False
-            if allow_interupt == True and PAUSED == False:
+            if allow_interrupt == True and PAUSED == False:
                 keep_looping = False
             time.sleep(interval)
     return
 
 
 def metrics(time_output, difficulty_output, accuracy_output, test_output, info_output, allowed_time=180):
-    """Disaply & update test metrics in real-time"""
-    global DIFFICULTY, PAUSED, RESPONSED
+    """Display & update test metrics in real-time"""
+    # Please use an allowed_time that is divisible by 3
+    global DIFFICULTY, PAUSED, RESPONDED
     time_remaining = allowed_time
-    
-    while time_remaining > 0:   
-        #Difficulty Adjustment & Display
+
+    while time_remaining > 0:
+        # Difficulty Adjustment & Display
         if time_remaining == allowed_time:
             PAUSED = True
             DIFFICULTY = "Easy"
             difficulty_output.append_stdout("\rDifficulty:" + " " + DIFFICULTY)
-        elif time_remaining == 2 * allowed_time / 3:    #注意误差，可能除不尽，要容许0.33333的误差
+        elif time_remaining == 2 * allowed_time / 3:
             PAUSED = True
             DIFFICULTY = "Medium"
             force_submit()
             difficulty_output.append_stdout("\rDifficulty:" + " " + DIFFICULTY)
-        elif time_remaining == allowed_time / 3:    #注意误差，可能除不尽，要容许0.33333的误差
+        elif time_remaining == allowed_time / 3:
             PAUSED = True
             DIFFICULTY = "Hard"
             force_submit()
             difficulty_output.outputs = []
             difficulty_output.append_stdout("\rDifficulty:" + " " + DIFFICULTY)
-        
-        #Timer & Accuracy Display
+
+        # Timer & Accuracy Display
         if DIFFICULTY == "Easy":
             easy_time_left = time_remaining - 2 * allowed_time / 3
             time_output.append_stdout("\rTime Left:" + " " + str(int(easy_time_left)) + " " + "seconds")
-            accuracy_output.append_stdout(f"\rAccuracy: {accuracy_dict['easy_correct']} / {accuracy_dict['easy_total']}")
+            accuracy_output.append_stdout(
+                f"\rAccuracy: {accuracy_dict['easy_correct']} / {accuracy_dict['easy_total']}")
         elif DIFFICULTY == "Medium":
             medium_time_left = time_remaining - 1 * allowed_time / 3
             time_output.append_stdout("\rTime Left:" + " " + str(int(medium_time_left)) + " " + "seconds")
-            accuracy_output.append_stdout(f"\rAccuracy: {accuracy_dict['medium_correct']} / {accuracy_dict['medium_total']}")
+            accuracy_output.append_stdout(
+                f"\rAccuracy: {accuracy_dict['medium_correct']} / {accuracy_dict['medium_total']}")
         elif DIFFICULTY == "Hard":
             time_output.append_stdout("\rTime Left:" + " " + str(int(time_remaining)) + " " + "seconds")
-            accuracy_output.append_stdout(f"\rAccuracy: {accuracy_dict['hard_correct']} / {accuracy_dict['hard_total']}")
-        
-        #Between-Section Pause
+            accuracy_output.append_stdout(
+                f"\rAccuracy: {accuracy_dict['hard_correct']} / {accuracy_dict['hard_total']}")
+
+        # Between-Section Pause
         if PAUSED and DIFFICULTY == "Easy":
             info_output.append_stdout("Section 1       Difficulty: Easy      Time allowed: 60s")
             time.sleep(4)
             info_output.layout.visibility = 'hidden'
             info_output.outputs = []
-            RESPONSED = False
+            RESPONDED = False
             PAUSED = False
             time_remaining -= 1
             event_info_dict['type'].append("start")
@@ -157,7 +161,7 @@ def metrics(time_output, difficulty_output, accuracy_output, test_output, info_o
             info_output.layout.visibility = 'hidden'
             test_output.layout.display = 'block'
             info_output.outputs = []
-            RESPONSED = False
+            RESPONDED = False
             PAUSED = False
             time_remaining -= 1
             event_info_dict['type'].append("start")
@@ -176,7 +180,7 @@ def metrics(time_output, difficulty_output, accuracy_output, test_output, info_o
             info_output.layout.display = 'hidden'
             test_output.layout.display = 'block'
             info_output.outputs = []
-            RESPONSED = False
+            RESPONDED = False
             PAUSED = False
             time_remaining -= 1
             event_info_dict['type'].append("start")
@@ -211,9 +215,9 @@ def metrics(time_output, difficulty_output, accuracy_output, test_output, info_o
 
 def test(test_output):
     """Carrying out test with 3 difficulties and answer checking"""
-    global DIFFICULTY, PAUSED, RESPONSED
+    global DIFFICULTY, PAUSED, RESPONDED
     wait_for_pause()
-    
+
     while DIFFICULTY == "Easy" and PAUSED == False:
         with test_output:
             number_0 = random.randint(1, 10)
@@ -223,7 +227,7 @@ def test(test_output):
         for i in range(3):
             number = random.randint(1, 10)
             symbol = random.choice(["+", "-"])
-            if RESPONSED:
+            if RESPONDED:
                 break
             if symbol == "×":
                 real_symbol = "*"
@@ -234,7 +238,7 @@ def test(test_output):
             with test_output:
                 clear_output(wait=False)
                 display(HTML(f"<h1 align='center'>{symbol}{number}</h1>"))
-        if RESPONSED:
+        if RESPONDED:
             break
         with test_output:
             text_input = widgets.Text(description="Answer:", placeholder="Press Enter to submit",
@@ -249,8 +253,8 @@ def test(test_output):
         end_time = time.time()
         time_taken = end_time - start_time
         qas_dict['time_taken'].append(time_taken)
-        accuracy_dict['easy_total'] += 1 
-        #Fixes the issue when there is a non-int input/force submit
+        accuracy_dict['easy_total'] += 1
+        # Fixes the issue when there is a non-int input/force submit
         try:
             answer_value = int(text_input.value)
         except ValueError:
@@ -258,14 +262,14 @@ def test(test_output):
         if int(current_answer) == answer_value:
             qas_dict['answer'].append(answer_value)
             qas_dict['is_correct'].append(True)
-            accuracy_dict['easy_correct'] += 1 
+            accuracy_dict['easy_correct'] += 1
         else:
             wrong_input = text_input.value
             qas_dict['answer'].append(wrong_input)
             qas_dict['is_correct'].append(False)
-    
+
     wait_for_pause()
-    
+
     while DIFFICULTY == "Medium" and PAUSED == False:
         with test_output:
             number_0 = random.randint(5, 15)
@@ -275,7 +279,7 @@ def test(test_output):
         for i in range(2):
             number = random.randint(5, 15)
             symbol = random.choice(["+", "-", "×"])
-            if RESPONSED:
+            if RESPONDED:
                 break
             if symbol == "×":
                 real_symbol = "*"
@@ -286,7 +290,7 @@ def test(test_output):
             with test_output:
                 clear_output(wait=False)
                 display(HTML(f"<h1 align='center'>{symbol}{number}</h1>"))
-        if RESPONSED:
+        if RESPONDED:
             break
         with test_output:
             text_input = widgets.Text(description="Answer:", placeholder="Press Enter to submit",
@@ -301,8 +305,8 @@ def test(test_output):
         end_time = time.time()
         time_taken = end_time - start_time
         qas_dict['time_taken'].append(time_taken)
-        accuracy_dict['medium_total'] += 1 
-        #Fixes the issue when there is a non-int input/force submit
+        accuracy_dict['medium_total'] += 1
+        # Fixes the issue when there is a non-int input/force submit
         try:
             answer_value = int(text_input.value)
         except ValueError:
@@ -310,14 +314,14 @@ def test(test_output):
         if int(current_answer) == answer_value:
             qas_dict['answer'].append(answer_value)
             qas_dict['is_correct'].append(True)
-            accuracy_dict['medium_correct'] += 1 
+            accuracy_dict['medium_correct'] += 1
         else:
             wrong_input = text_input.value
             qas_dict['answer'].append(wrong_input)
             qas_dict['is_correct'].append(False)
-            
+
     wait_for_pause()
-    
+
     while DIFFICULTY == "Hard" and PAUSED == False:
         with test_output:
             number_0 = random.randint(10, 20)
@@ -327,7 +331,7 @@ def test(test_output):
         for i in range(2):
             number = random.randint(10, 20)
             symbol = random.choice(["+", "-", "×"])
-            if RESPONSED:
+            if RESPONDED:
                 break
             if symbol == "×":
                 real_symbol = "*"
@@ -338,7 +342,7 @@ def test(test_output):
             with test_output:
                 clear_output(wait=False)
                 display(HTML(f"<h1 align='center'>{symbol}{number}</h1>"))
-        if RESPONSED:
+        if RESPONDED:
             break
         with test_output:
             text_input = widgets.Text(description="Answer:", placeholder="Press Enter to submit",
@@ -353,8 +357,8 @@ def test(test_output):
         end_time = time.time()
         time_taken = end_time - start_time
         qas_dict['time_taken'].append(time_taken)
-        accuracy_dict['hard_total'] += 1 
-        #Fixes the issue when there is a non-int input/force submit
+        accuracy_dict['hard_total'] += 1
+        # Fixes the issue when there is a non-int input/force submit
         try:
             answer_value = int(text_input.value)
         except ValueError:
@@ -362,12 +366,12 @@ def test(test_output):
         if int(current_answer) == answer_value:
             qas_dict['answer'].append(answer_value)
             qas_dict['is_correct'].append(True)
-            accuracy_dict['hard_correct'] += 1 
+            accuracy_dict['hard_correct'] += 1
         else:
             wrong_input = text_input.value
             qas_dict['answer'].append(wrong_input)
             qas_dict['is_correct'].append(False)
-    RESPONSED = False
+    RESPONDED = False
     return
 
 
@@ -379,7 +383,7 @@ def score():
 
 # DATA UPLOAD
 def send_to_google_form(data_dict, form_url):
-    '''Upload information to a corresponding google form'''
+    """Upload information to a corresponding Google form"""
     form_id = form_url[34:90]
     view_form_url = f'https://docs.google.com/forms/d/e/{form_id}/viewform'
     post_form_url = f'https://docs.google.com/forms/d/e/{form_id}/formResponse'
@@ -389,7 +393,7 @@ def send_to_google_form(data_dict, form_url):
     content = content.text[27:-1]
     result = json.loads(content)[1][1]
     form_dict = {}
-    
+
     loaded_all = True
     for item in result:
         if item[1] not in data_dict:
@@ -397,6 +401,6 @@ def send_to_google_form(data_dict, form_url):
             loaded_all = False
             return False
         form_dict[f'entry.{item[4][0][0]}'] = data_dict[item[1]]
-    
+
     post_result = requests.post(post_form_url, data=form_dict)
     return post_result.ok

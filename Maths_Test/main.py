@@ -1,29 +1,34 @@
 import sys
 if 'functions' in sys.modules:
     del sys.modules['functions']
+
 from functions import *
+import pandas as pd
 from pathlib import Path
 import threading
 
 # Variables
 upload_dict = {
-    'id': '', 
-    'gender': '', 
-    'age': '', 
-    'rating': '', 
-    'score': '', 
-    'accuracy_json': '', 
-    'qas_json': '', 
+    'id': '',
+    'gender': '',
+    'age': '',
+    'rating': '',
+    'score': '',
+    'accuracy_json': '',
+    'qas_json': '',
     'event_info_json': '',
 }
 
-form_url = 'https://docs.google.com/forms/d/e/1FAIpQLSdTEaRV3qHAUx93GQDgvkBdkrO0zCMzn__yAbDKd1vaKYE0Lg/viewform?usp=sf_link'
+form_url = ('https://docs.google.com/forms/d/e/1FAIpQLSdTEaRV3qHAUx93GQDgvkBdkrO0zCMzn__yAbDKd1vaKYE0Lg/viewform?usp'
+            '=sf_link')
+gsheetkey = "1fMYFR8SSEZxlaJX6QW5qPwJbHzlCacz3vQKX6ioHU6w"
+sheet_url = f"https://docs.google.com/spreadsheet/ccc?key={gsheetkey}&output=xlsx"
 
 # Data Consent Information
 display(HTML("<h1 align='center'>Data Consent Information</h1>"))
 display(HTML("""
 <p style="text-align: center; font-size: 18px">
-We wish to record your response data to an anonymised public data repository.<br>
+We wish to record your response data to an anonymized public data repository.<br>
 Your data will be used for educational teaching purposes practising data analysis and visualisation.<br>
 If you do not want your data to be used, please close this program immediately.<br>
 Otherwise, press "Agree Statement" to continue.
@@ -46,7 +51,7 @@ To start, we need to collect a few information from you.
 """))
 display(HTML("""
 <p style="text-align: center; font-size: 22px">
-First is your anonymised id. Look at the guidance below.
+First is your anonymized id. Look at the guidance below.
 </p>
 """))
 display(HTML("""
@@ -58,20 +63,20 @@ display(HTML("""
   </ul>
 </div>
 """))
-id_input = widgets.Text(description="ID: ", placeholder="Please enter your anonymised id", continuous_update=False)
+id_input = widgets.Text(description="ID: ", placeholder="Please enter your anonymized id", continuous_update=False)
 id_box = widgets.HBox([id_input], layout=widgets.Layout(justify_content='center'))
 id_input.observe(register_text, names='value')
 display(id_box)
 wait_for_response()
-id = id_input.value
-upload_dict['id'] = id
+userid = id_input.value
+upload_dict['id'] = userid
 clear_output(wait=False)
 display(HTML("""
 <p style="text-align: center; font-size: 22px">
 Then your gender.
 </p>
 """))
-gender_dropdown = widgets.Dropdown(options=['Male','Female','Other'], description="Gender: ", value = None)
+gender_dropdown = widgets.Dropdown(options=['Male', 'Female', 'Other'], description="Gender: ", value=None)
 gender_box = widgets.HBox([gender_dropdown], layout=widgets.Layout(justify_content='center'))
 gender_dropdown.observe(register_dropdown, names='value')
 display(gender_box)
@@ -133,7 +138,8 @@ accuracy_output = widgets.Output()
 info_output = widgets.Output()
 display(time_output, difficulty_output, accuracy_output, test_output, info_output)
 
-metrics_thread = threading.Thread(target=metrics, args=(time_output, difficulty_output, accuracy_output, test_output, info_output))
+metrics_thread = threading.Thread(target=metrics,
+                                  args=(time_output, difficulty_output, accuracy_output, test_output, info_output))
 metrics_thread.start()
 test(test_output)
 
@@ -150,7 +156,8 @@ time.sleep(1)
 rating_btn1 = widgets.Button(description="Too Hard")
 rating_btn2 = widgets.Button(description="Just Right")
 rating_btn3 = widgets.Button(description="Too Easy")
-rating_buttons_box = widgets.HBox([rating_btn1, rating_btn2, rating_btn3], layout=widgets.Layout(justify_content='center'))
+rating_buttons_box = widgets.HBox([rating_btn1, rating_btn2, rating_btn3],
+                                  layout=widgets.Layout(justify_content='center'))
 rating_btn1.on_click(register_button)
 rating_btn2.on_click(register_button)
 rating_btn3.on_click(register_button)
@@ -164,7 +171,8 @@ display(HTML("<h1 align='center'>Thanks for your feedback!</h1>"))
 time.sleep(1)
 
 clear_output(wait=False)
-display(HTML('<p style="text-align: center; font-size: 22px">Calculating and uploading your result, please wait......</p>'))
+display(
+    HTML('<p style="text-align: center; font-size: 22px">Calculating and uploading your result, please wait......</p>'))
 score = score()
 upload_dict['score'] = score
 accuracy_df = pd.DataFrame([accuracy_dict])
@@ -177,21 +185,34 @@ try:
     upload_status = send_to_google_form(upload_dict, form_url)
 except Exception:
     clear_output(wait=False)
-    display(HTML('<p style="text-align: center; font-size: 22px">Sorry, an error occurred. Trying to upload again......</p>'))
+    display(HTML('<p style="text-align: center; font-size: 22px">Sorry, an error occurred. Trying to upload '
+                 'again......</p>'))
     try:
         upload_status = send_to_google_form(upload_dict, form_url)
     except Exception:
         clear_output(wait=False)
-        display(HTML('<p style="text-align: center; font-size: 22px">Upload unsuccessful. Check your internet connection.</p>'))
+        display(HTML('<p style="text-align: center; font-size: 22px">Upload unsuccessful. Check your internet '
+                     'connection.</p>'))
         display(HTML(f"<p style='text-align: center; font-size: 18px'>Your score in this test is {score}.</p>"))
         path = Path('upload.json')
         contents = json.dumps(upload_dict)
         path.write_text(contents)
-        display(HTML('<p style="text-align: center; font-size: 18px">Please manually send the generated upload.json within the same directory to zcbtdc5@ucl.ac.uk. Thank you.</p>'))
-        raise(Exception("Upload Error"))
+        display(HTML('<p style="text-align: center; font-size: 18px">Please manually send the generated upload.json '
+                     'within the same directory to zcbtdc5@ucl.ac.uk. Thank you.</p>'))
+        raise (Exception("Upload Error"))
 
 display(HTML('<p style="text-align: center; font-size: 22px">Upload successful!</p>'))
+display(HTML('<p style="text-align: center; font-size: 22px">Ranking you with other people......</p>'))
+
+ranking_df = pd.read_excel(sheet_url, usecols='B, F')
+rankings = ranking_df['score'].rank(method='min', ascending=False)
+ranking = rankings[ranking_df['score'] == score].iloc[0]
+total_entries = len(ranking_df)
+max_value = ranking_df['score'].max()
+
 time.sleep(2)
 clear_output(wait=False)
-display(HTML(f"<h1 align='center'>Well done, {id}!</h1>"))
-display(HTML(f"<p style='text-align: center; font-size: 18px'>Your score in this test is {score}.<br>Feel free to try the test again for a better result!</p>"))
+display(HTML(f"<h1 align='center'>Well done, {userid}!</h1>"))
+display(HTML(f"<p style='text-align: center; font-size: 18px'>Your score in this test is {score}.<br>You are ranked "
+             f"{ranking:.0f} out of {total_entries} testees.<br>Currently the highest score is {max_value}.<br>"
+             f"Feel free to try the test again for a better result!</p>"))
