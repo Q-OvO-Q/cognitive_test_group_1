@@ -9,3 +9,4 @@ jupyter_ui_poll
 IPython.display
 bs4 (BeautifulSoup)
 openpyxl
+pyarrow
