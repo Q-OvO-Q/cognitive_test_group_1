@@ -1,3 +1,0 @@
-display_consent_information()
-test_instructions("blue", "test")
-memory_test()
