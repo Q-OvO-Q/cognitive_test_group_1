@@ -8,7 +8,7 @@ from IPython.display import display, clear_output, HTML
 from bs4 import BeautifulSoup
 
 # Setting Seed
-random.seed(2)
+random.seed(1)
 
 # VARIABLES
 event_info_dict = {'type': ["start", ], 'description': ["program started", ],
