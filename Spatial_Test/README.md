@@ -13,6 +13,7 @@
 12. record the age information of user.
 13. added a confirmation button at the end of the test.
 14. more tidy up imports
+15. more logical in-code comment
 
 # Things to be done
 1. analyze the data using pandas.
