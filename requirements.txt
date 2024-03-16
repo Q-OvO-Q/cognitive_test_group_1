@@ -8,5 +8,5 @@ pyarrow
 json 
 time
 requests
-bs4 (BeautifulSoup)
+bs4 BeautifulSoup
 IPython.display 
