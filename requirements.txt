@@ -5,3 +5,8 @@ ipywidgets
 jupyter_ui_poll
 openpyxl
 pyarrow
+json 
+time
+requests
+bs4 (BeautifulSoup)
+IPython.display 
