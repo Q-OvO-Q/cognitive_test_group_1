@@ -11,10 +11,11 @@
 10. record the options chosen by the user.
 11. used a sized text.
 12. record the age information of user.
+13. added a confirmation button at the end of the test.
+14. more tidy up imports
 
 # Things to be done
-1. showing  "Frame 0 ({'shell': {...}, 'control': [b'f...) does not support the buffer interface." when running the data consent code in file .py.
-2. withdraw the data saved in google form.
-3. analyze the data using pandas.
-4. writing report.
-5. upload the codes in binder.
+1. analyze the data using pandas.
+2. writing report.
+3. graphs
+4. odd and even question comparison
