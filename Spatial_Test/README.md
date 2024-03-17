@@ -1,6 +1,6 @@
 # Spatial Reasoning Test (SPT)
 * This test last approximately 3 to 5 minutes, with variations on individuals.
-* Your name, group number, sex and age information is gathered only for teaching and training purpose. More information please see the "Data Consent" session in the test. 
+* Your anonymous ID, group number, sex and age information is gathered only for teaching and training purpose. More information please see the "Data Consent" session in the test. 
 * The difficulty of questions is evenly distributted, and every question values the same.
 * There are eight questions in total.
 * Each question is composed of one 3D visualisation of cubes of different colours, and four pictures of 2D projections.
@@ -23,7 +23,8 @@
 13. added a confirmation button at the end of the test.
 14. more tidy up imports
 15. more logical in-code comment
-16. added a brief introduction at the very begining of the test. 
+16. added a brief introduction at the very begining of the test.
+17. check whether the input information is in the correct format, such as four characters for ID. 
 
 # Things to be done
 1. analyze the data using pandas.
