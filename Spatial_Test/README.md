@@ -23,6 +23,7 @@
 13. added a confirmation button at the end of the test.
 14. more tidy up imports
 15. more logical in-code comment
+16. added a brief introduction at the very begining of the test. 
 
 # Things to be done
 1. analyze the data using pandas.
