@@ -7,4 +7,4 @@ Improvements to ans_test_code.ipynb made in v2:
 - added docstrings and comments
 - added run_ans.ipynb which allows the user to take the test without having to see any of the code
 - the user is shown their ranking and result at the end of the test
-- the user is able to see which question and so how far through the test they are
+- the user is able to see which question they are on and so how far through the test they are
