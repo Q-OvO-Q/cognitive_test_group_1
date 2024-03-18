@@ -24,7 +24,8 @@
 14. more tidy up imports
 15. more logical in-code comment
 16. added a brief introduction at the very begining of the test.
-17. check whether the input information is in the correct format, such as four characters for ID. 
+17. check whether the input information is in the correct format, such as four characters for ID.
+18. used button for the confirmation of data consent, instead of typing.
 
 # Things to be done
 1. analyze the data using pandas.
