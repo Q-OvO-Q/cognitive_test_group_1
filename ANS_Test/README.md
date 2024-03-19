@@ -9,3 +9,8 @@ Improvements to ans_test_code.ipynb made in v2:
 - added run_ans.ipynb which allows the user to take the test without having to see any of the code
 - the user is shown their result at the end of the test
 - the user is able to see which question they are on and so how far through the test they are
+
+Contents of ANS_test directory:
+- images used in the test
+- ans_test_code.ipynb v1 and v2
+- run_ans.ipynb
