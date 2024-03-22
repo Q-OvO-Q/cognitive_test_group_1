@@ -8,26 +8,15 @@
 * There is no time limit on observation, so please do not rush to the next question.
 
 # Compared with the code V1.0.0, following improvements are made
-1. added consent on data usage.
-2. used anonymous ID instead of real-name system (student ID).
-4. introduce the use of button instead of typing answers.
-5. more imports and more defined functions.
-6. added docstring for functions. 
-7. added a waiting time of 2 seconds before cleaing ouput.
-8. more user-friendly UI.
-9. save and upload the data in json format instead of pd.dataframe.
-10. record the options chosen by the user.
-11. used a sized text.
-12. record the age information of user.
-13. added a confirmation button at the end of the test.
-14. more tidy up imports
-15. more logical in-code comment
-16. added a brief introduction at the very begining of the test.
-17. check whether the input information is in the correct format, such as four characters for ID.
-18. used button for the confirmation of data consent, instead of typing.
-
-# Things to be done
-1. analyze the data using pandas.
-2. writing report.
-3. graphs
-4. odd and even question comparison
+1. used anonymous ID instead of real-name system (student ID).
+2. added docstring for functions. 
+3. added a waiting time of 2 seconds before cleaing ouput.
+4. more user-friendly UI.
+5. save and upload the data in json format instead of pd.dataframe.
+6. used a sized text.
+7. added a confirmation button at the end of the test.
+8. more tidy up imports
+9. more logical in-code comment
+10. added a brief introduction at the very begining of the test.
+11. check whether the input information is in the correct format, such as four characters for ID.
+12. use button for the confirmation of data consent, instead of typing.
