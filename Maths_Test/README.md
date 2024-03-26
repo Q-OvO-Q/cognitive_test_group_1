@@ -1,6 +1,8 @@
 # Math Ability Test
 
-[Description of your project, its purpose, and usage]
+This folder contains code developed to run math test written by Group 1 as part of the BIOS0030 course.
+
+It will test your mathematical skills and upload your result to an online spreadsheet for data analysis and comparison.
 
 ## Contents
 - [Test Instruction](#test-instruction)
@@ -23,7 +25,7 @@
 
 ## Update Log
 
-### From v1.0 to v2.0
+### v2.0
 
 #### Major Enhancements
 
@@ -48,13 +50,20 @@
 - Event Logging: Introduced detailed event logging, capturing user interactions and system events throughout the test.
 
 #### Minor Updates
-- Updated external links and API endpoints for data upload.
+- Updated external links for data upload.
 - Minor text and display adjustments.
 - Optimized code for performance improvements.
+- Included more comments and docstrings for improved code readability.
 
 #### Bug Fixes
 - Addressed issues related to user inputs and data formatting.
 
-#### Upcoming Features
-- Personalized Feedback: Planning to implement a feature for personalized user feedback.
-- Enhanced Analytics: Aiming to introduce more sophisticated data analysis tools.
+### v1.0
+
+#### Initial Release Features
+- The first stable release of the project, featuring basic functionality.
+- User-friendly interface for efficient navigation and operation.
+
+#### Known Issues
+- Display issues when the question parts repeat.
+- Poor code readability.
