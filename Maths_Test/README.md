@@ -25,7 +25,7 @@ Access this test through mybinder:
 
 https://mybinder.org/v2/gh/Q-OvO-Q/cognitive_test_group_1/HEAD
 
-Click the link, then enter the Maths_Test folder, and then click into math_ability_test.ipynb.
+Click the link, then enter the Maths_Test folder, finally open math_ability_test.ipynb.
 
 ## Update Log
 
