@@ -21,7 +21,9 @@ It will test your mathematical skills and upload your result to an online spread
 
 ## Usage
 
-[Instructions on how to use the application]
+Access this test through mybinder:
+
+https://mybinder.org/v2/gh/Q-OvO-Q/cognitive_test_group_1/Maths_Test/HEAD
 
 ## Update Log
 
