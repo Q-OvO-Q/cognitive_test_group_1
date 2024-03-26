@@ -23,7 +23,7 @@ It will test your mathematical skills and upload your result to an online spread
 
 Access this test through mybinder:
 
-https://mybinder.org/v2/gh/Q-OvO-Q/cognitive_test_group_1/Maths_Test
+https://mybinder.org/v2/gh/Q-OvO-Q/cognitive_test_group_1/HEAD
 
 ## Update Log
 
