@@ -1,4 +1,14 @@
 # Math Ability Test
+
+[Description of your project, its purpose, and usage]
+
+## Contents
+- [Test Instruction](#test-instruction)
+- [Usage](#usage)
+- [Update Log](#update-log)
+  
+## Test Instruction
+
 * The test will last for 3 minutes with 1 minute for each section.
 * The difficulty of questions will be different in each section, from easy to hard.
 * You will need to perform a sequence of calculations and provide the answer.
@@ -6,29 +16,6 @@
 * Perform calculations SEQUENTIALLY rather than following standard arithmetic precedence rules.
 * There is no upper limit for the score. The more correct ones, the higher the score.
 * DO NOT USE CALCULATORS FOR HELP.
-
-# Math Ability Test
-
-[Description of your project, its purpose, and usage]
-
-## Table of Contents
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Update Log](#update-log)
-- [Contributing](#contributing)
-- [License](#license)
-
-<details>
-<summary>Introduction</summary>
-## Introduction
-
-[Project introduction and overview]
-</details>
-
-## Installation
-
-[Installation instructions]
 
 ## Usage
 
@@ -71,11 +58,3 @@
 #### Upcoming Features
 - Personalized Feedback: Planning to implement a feature for personalized user feedback.
 - Enhanced Analytics: Aiming to introduce more sophisticated data analysis tools.
-
-## Contributing
-
-[Guidelines for contributing to the project]
-
-## License
-
-[License information]
