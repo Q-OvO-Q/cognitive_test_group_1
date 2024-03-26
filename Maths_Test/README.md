@@ -7,7 +7,7 @@
 * There is no upper limit for the score. The more correct ones, the higher the score.
 * DO NOT USE CALCULATORS FOR HELP.
 
-# Project Name
+# Math Ability Test
 
 [Description of your project, its purpose, and usage]
 
@@ -19,9 +19,12 @@
 - [Contributing](#contributing)
 - [License](#license)
 
+<details>
+<summary>Introduction</summary>
 ## Introduction
 
 [Project introduction and overview]
+</details>
 
 ## Installation
 
