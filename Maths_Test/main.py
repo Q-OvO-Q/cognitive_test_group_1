@@ -1,7 +1,3 @@
-import sys
-if 'functions' in sys.modules:
-    del sys.modules['functions']
-
 from functions import *
 import pandas as pd
 from pathlib import Path
@@ -15,8 +11,7 @@ upload_dict = {
     'rating': '',
     'score': '',
     'accuracy_json': '',
-    'qas_json': '',
-    'event_info_json': '',
+    'result_json': '',
 }
 
 form_url = ('https://docs.google.com/forms/d/e/1FAIpQLSdTEaRV3qHAUx93GQDgvkBdkrO0zCMzn__yAbDKd1vaKYE0Lg/viewform?usp'
@@ -142,6 +137,7 @@ metrics_thread = threading.Thread(target=metrics,
                                   args=(time_output, difficulty_output, accuracy_output, test_output, info_output))
 metrics_thread.start()
 test(test_output)
+result_dict['is_correct'].append('end')
 
 # End of Test
 clear_output(wait=False)
@@ -162,8 +158,8 @@ rating_btn1.on_click(register_button)
 rating_btn2.on_click(register_button)
 rating_btn3.on_click(register_button)
 display(rating_buttons_box)
-wait_for_response()
-rating = event_info_dict['description'][-1]
+result = wait_for_response()
+rating = result['description']
 upload_dict['rating'] = rating
 
 clear_output(wait=False)
@@ -177,10 +173,8 @@ score = score()
 upload_dict['score'] = score
 accuracy_df = pd.DataFrame([accuracy_dict])
 upload_dict['accuracy_json'] = accuracy_df.to_json()
-qas_df = pd.DataFrame(qas_dict)
-upload_dict['qas_json'] = qas_df.to_json()
-event_info_df = pd.DataFrame(event_info_dict)
-upload_dict['event_info_json'] = event_info_df.to_json()
+result_df = pd.DataFrame(result_dict)
+upload_dict['result_json'] = result_df.to_json()
 try:
     upload_status = send_to_google_form(upload_dict, form_url)
 except Exception:
@@ -202,17 +196,9 @@ except Exception:
         raise (Exception("Upload Error"))
 
 display(HTML('<p style="text-align: center; font-size: 22px">Upload successful!</p>'))
-display(HTML('<p style="text-align: center; font-size: 22px">Ranking you with other people......</p>'))
-
-ranking_df = pd.read_excel(sheet_url, usecols='B, F')
-rankings = ranking_df['score'].rank(method='min', ascending=False)
-ranking = rankings[ranking_df['score'] == score].iloc[0]
-total_entries = len(ranking_df)
-max_value = ranking_df['score'].max()
 
 time.sleep(2)
 clear_output(wait=False)
 display(HTML(f"<h1 align='center'>Well done, {userid}!</h1>"))
-display(HTML(f"<p style='text-align: center; font-size: 18px'>Your score in this test is {score}.<br>You are ranked "
-             f"{ranking:.0f} out of {total_entries} testees.<br>Currently the highest score is {max_value}.<br>"
+display(HTML(f"<p style='text-align: center; font-size: 18px'>Your score in this test is {score}.<br>"
              f"Feel free to try the test again for a better result!</p>"))

@@ -7,15 +7,12 @@ from jupyter_ui_poll import ui_events
 from IPython.display import display, clear_output, HTML
 from bs4 import BeautifulSoup
 
-# Setting Seed
-random.seed(1)
 
 # VARIABLES
-event_info_dict = {'type': ["start", ], 'description': ["program started", ],
-                   'time': [time.asctime(time.localtime(time.time())), ]}
+event_info = {'type': '', 'description': '', 'time': -1}
 accuracy_dict = {'easy_correct': 0, 'easy_total': 0, 'medium_correct': 0, 'medium_total': 0, 'hard_correct': 0,
                  'hard_total': 0}
-qas_dict = {'question': [], 'answer': [], 'is_correct': [], 'time_taken': []}
+result_dict = {'is_correct': []}
 RESPONDED = False
 PAUSED = False
 DIFFICULTY = ""
@@ -25,6 +22,9 @@ DIFFICULTY = ""
 def wait_for_response(timeout=-1.0, interval=0.001, max_rate=20.0, allow_interrupt=True):
     global RESPONDED
     start_wait = time.time()
+    event_info['type'] = ""
+    event_info['description'] = ""
+    event_info['time'] = -1
     n_proc = int(max_rate * interval) + 1
     with ui_events() as ui_poll:
         keep_looping = True
@@ -36,15 +36,15 @@ def wait_for_response(timeout=-1.0, interval=0.001, max_rate=20.0, allow_interru
                 keep_looping = False
             time.sleep(interval)
     RESPONDED = False
-    return
+    return event_info
 
 
 def register_button(btn):
     """Callback function for button widget click event"""
     global RESPONDED
-    event_info_dict['type'].append("button_click")
-    event_info_dict['description'].append(btn.description)
-    event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
+    event_info['type'] = "button click"
+    event_info['description'] = btn.description
+    event_info['time'] = time.time()
     RESPONDED = True
     return
 
@@ -52,9 +52,9 @@ def register_button(btn):
 def register_text(change):
     """Callback function for text widget change event"""
     global RESPONDED
-    event_info_dict['type'].append("text_submit")
-    event_info_dict['description'].append(change['new'])
-    event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
+    event_info['type'] = "text submit"
+    event_info['description'] = change['new']
+    event_info['time'] = time.time()
     RESPONDED = True
     return
 
@@ -62,9 +62,9 @@ def register_text(change):
 def register_dropdown(change):
     """Callback function for dropdown widget change event"""
     global RESPONDED
-    event_info_dict['type'].append("dropdown_select")
-    event_info_dict['description'].append(change['new'])
-    event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
+    event_info['type'] = "dropdown select"
+    event_info['description'] = change['new']
+    event_info['time'] = time.time()
     RESPONDED = True
     return
 
@@ -72,9 +72,9 @@ def register_dropdown(change):
 def force_submit():
     """Stop wait_for_response function"""
     global RESPONDED
-    event_info_dict['type'].append("force_submit")
-    event_info_dict['description'].append("time out")
-    event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
+    event_info['type'] = "force submit"
+    event_info['description'] = "time out"
+    event_info['time'] = time.time()
     RESPONDED = True
     return
 
@@ -145,13 +145,7 @@ def metrics(time_output, difficulty_output, accuracy_output, test_output, info_o
             RESPONDED = False
             PAUSED = False
             time_remaining -= 1
-            event_info_dict['type'].append("start")
-            event_info_dict['description'].append("easy")
-            event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
-            qas_dict['question'].append('easy')
-            qas_dict['answer'].append('easy')
-            qas_dict['is_correct'].append('easy')
-            qas_dict['time_taken'].append('easy')
+            result_dict['is_correct'].append('easy')
         elif PAUSED and DIFFICULTY == "Medium":
             test_output.layout.display = 'none'
             info_output.layout.visibility = 'visible'
@@ -164,13 +158,7 @@ def metrics(time_output, difficulty_output, accuracy_output, test_output, info_o
             RESPONDED = False
             PAUSED = False
             time_remaining -= 1
-            event_info_dict['type'].append("start")
-            event_info_dict['description'].append("medium")
-            event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
-            qas_dict['question'].append('medium')
-            qas_dict['answer'].append('medium')
-            qas_dict['is_correct'].append('medium')
-            qas_dict['time_taken'].append('medium')
+            result_dict['is_correct'].append('medium')
         elif PAUSED and DIFFICULTY == "Hard":
             test_output.layout.display = 'none'
             info_output.layout.visibility = 'visible'
@@ -183,13 +171,7 @@ def metrics(time_output, difficulty_output, accuracy_output, test_output, info_o
             RESPONDED = False
             PAUSED = False
             time_remaining -= 1
-            event_info_dict['type'].append("start")
-            event_info_dict['description'].append("hard")
-            event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
-            qas_dict['question'].append('hard')
-            qas_dict['answer'].append('hard')
-            qas_dict['is_correct'].append('hard')
-            qas_dict['time_taken'].append('hard')
+            result_dict['is_correct'].append('hard')
         else:
             time.sleep(1)
             time_remaining -= 1
@@ -197,14 +179,6 @@ def metrics(time_output, difficulty_output, accuracy_output, test_output, info_o
     force_submit()
     info_output.layout.display = 'none'
     test_output.layout.display = 'none'
-    time.sleep(2)
-    event_info_dict['type'].append("end")
-    event_info_dict['description'].append("end")
-    event_info_dict['time'].append(time.asctime(time.localtime(time.time())))
-    qas_dict['question'].append('end')
-    qas_dict['answer'].append('end')
-    qas_dict['is_correct'].append('end')
-    qas_dict['time_taken'].append('end')
     difficulty_output.layout.display = 'none'
     time_output.outputs = []
     time_output.layout.display = 'none'
@@ -217,7 +191,7 @@ def test(test_output):
     """Carrying out test with 3 difficulties and answer checking"""
     global DIFFICULTY, PAUSED, RESPONDED
     wait_for_pause()
-
+    random.seed(1)
     while DIFFICULTY == "Easy" and PAUSED == False:
         with test_output:
             number_0 = random.randint(1, 10)
@@ -247,12 +221,7 @@ def test(test_output):
             text_input.observe(register_text, names='value')
             display(text_box)
         current_answer = eval(current_expression)
-        qas_dict['question'].append(current_expression)
-        start_time = time.time()
         wait_for_response()
-        end_time = time.time()
-        time_taken = end_time - start_time
-        qas_dict['time_taken'].append(time_taken)
         accuracy_dict['easy_total'] += 1
         # Fixes the issue when there is a non-int input/force submit
         try:
@@ -260,15 +229,13 @@ def test(test_output):
         except ValueError:
             answer_value = 'error'
         if int(current_answer) == answer_value:
-            qas_dict['answer'].append(answer_value)
-            qas_dict['is_correct'].append(True)
+            result_dict['is_correct'].append(True)
             accuracy_dict['easy_correct'] += 1
         else:
-            wrong_input = text_input.value
-            qas_dict['answer'].append(wrong_input)
-            qas_dict['is_correct'].append(False)
+            result_dict['is_correct'].append(False)
 
     wait_for_pause()
+    random.seed(2)
 
     while DIFFICULTY == "Medium" and PAUSED == False:
         with test_output:
@@ -299,12 +266,7 @@ def test(test_output):
             text_input.observe(register_text, names='value')
             display(text_box)
         current_answer = eval(current_expression)
-        qas_dict['question'].append(current_expression)
-        start_time = time.time()
         wait_for_response()
-        end_time = time.time()
-        time_taken = end_time - start_time
-        qas_dict['time_taken'].append(time_taken)
         accuracy_dict['medium_total'] += 1
         # Fixes the issue when there is a non-int input/force submit
         try:
@@ -312,15 +274,13 @@ def test(test_output):
         except ValueError:
             answer_value = 'error'
         if int(current_answer) == answer_value:
-            qas_dict['answer'].append(answer_value)
-            qas_dict['is_correct'].append(True)
+            result_dict['is_correct'].append(True)
             accuracy_dict['medium_correct'] += 1
         else:
-            wrong_input = text_input.value
-            qas_dict['answer'].append(wrong_input)
-            qas_dict['is_correct'].append(False)
+            result_dict['is_correct'].append(False)
 
     wait_for_pause()
+    random.seed(3)
 
     while DIFFICULTY == "Hard" and PAUSED == False:
         with test_output:
@@ -351,12 +311,7 @@ def test(test_output):
             text_input.observe(register_text, names='value')
             display(text_box)
         current_answer = eval(current_expression)
-        qas_dict['question'].append(current_expression)
-        start_time = time.time()
         wait_for_response()
-        end_time = time.time()
-        time_taken = end_time - start_time
-        qas_dict['time_taken'].append(time_taken)
         accuracy_dict['hard_total'] += 1
         # Fixes the issue when there is a non-int input/force submit
         try:
@@ -364,13 +319,10 @@ def test(test_output):
         except ValueError:
             answer_value = 'error'
         if int(current_answer) == answer_value:
-            qas_dict['answer'].append(answer_value)
-            qas_dict['is_correct'].append(True)
+            result_dict['is_correct'].append(True)
             accuracy_dict['hard_correct'] += 1
         else:
-            wrong_input = text_input.value
-            qas_dict['answer'].append(wrong_input)
-            qas_dict['is_correct'].append(False)
+            result_dict['is_correct'].append(False)
     RESPONDED = False
     return
 
