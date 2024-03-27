@@ -25,7 +25,7 @@ Access this test through mybinder:
 
 https://mybinder.org/v2/gh/Q-OvO-Q/cognitive_test_group_1/HEAD
 
-Click the link, then enter the Spatial_Test folder, finally open Spatial_Code.ipynb.
+Click the link, then enter the Spatial_Test folder, finally open Cube-Test.ipynb.
 
 ## Update Log
 
