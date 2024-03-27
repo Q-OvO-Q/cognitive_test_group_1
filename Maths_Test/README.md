@@ -1,6 +1,6 @@
 # Math Ability Test
 
-This folder contains code developed to run math test written by Group 1 as part of the BIOS0030 course.
+This folder contains code developed to run maths test written by Group 1 as part of the BIOS0030 course.
 
 It will test your mathematical skills and upload your result to an online spreadsheet for data analysis and comparison.
 
@@ -43,15 +43,15 @@ Click the link, then enter the Maths_Test folder, finally open math_ability_test
 
 ##### User Interface and Experience
 - Clearer Test Instructions: Revised the test instructions to provide clearer guidelines on how calculations should be performed.
-- Feedback Mechanism: Simplified the feedback collection process by directly mapping user feedback to the upload dictionary.
+- Improved Feedback: Fetches up-to-date results data from the spreadsheet each time, allowing user to see their ranking and .
 
 ##### Data Handling and Upload
 - Enhanced Data Structure: Introduced a more comprehensive data structure for storing test questions, answers, correctness, and time taken.
 - Improved Upload Mechanism: Streamlined the data upload process to handle errors more gracefully.
 
 ##### System Operations and Efficiency
-- Module Management: Added functionality to dynamically reload the `functions` module.
-- Event Logging: Introduced detailed event logging, capturing user interactions and system events throughout the test.
+- Module Management: Added functionality to dynamically reload `functions.py`.
+- Event Logging: Introduced detailed event logging, capturing user interactions throughout the test.
 
 #### Minor Updates
 - Updated external links for data upload.
@@ -69,5 +69,5 @@ Click the link, then enter the Maths_Test folder, finally open math_ability_test
 - User-friendly interface for efficient navigation and operation.
 
 #### Known Issues
-- Display issues when the question parts repeat.
+- Display issues when the question parts get repeated.
 - Poor code readability.
