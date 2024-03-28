@@ -7,3 +7,5 @@ There are four tests to complete. These will test your number estimation, mathem
 Access the tests through mybinder:  
 
 https://mybinder.org/v2/gh/Q-OvO-Q/cognitive_test_group_1/HEAD
+
+Alternatively, you can download this repository and run all tests locally.
