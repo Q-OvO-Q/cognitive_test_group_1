@@ -5,3 +5,4 @@ ipywidgets
 jupyter_ui_poll
 openpyxl
 pyarrow
+keyboard
