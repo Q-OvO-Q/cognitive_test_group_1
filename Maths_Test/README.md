@@ -29,39 +29,6 @@ Click the link, then enter the Maths_Test folder, finally open math_ability_test
 
 ## Update Log
 
-### v2.0
-
-#### Major Enhancements
-
-##### Improved User Interaction and Validation
-- Anonymized ID Collection: Introduced validation for the anonymized ID input to ensure it follows the specified format (4 alphabetic characters).
-- Dynamic Age Verification: Added a check to ensure the age input is a valid number within a reasonable range (0-120 years).
-
-##### Enhanced Test Functionality
-- Randomized Question Generation: Enhanced the question generation mechanism to avoid repeating the same question within a test session.
-- Improved Answer Verification: Streamlined the process for verifying answers, including time tracking for each question.
-
-##### User Interface and Experience
-- Clearer Test Instructions: Revised the test instructions to provide clearer guidelines on how calculations should be performed.
-- Improved Feedback: Fetches up-to-date results data from the spreadsheet each time, allowing user to see their ranking and .
-
-##### Data Handling and Upload
-- Enhanced Data Structure: Introduced a more comprehensive data structure for storing test questions, answers, correctness, and time taken.
-- Improved Upload Mechanism: Streamlined the data upload process to handle errors more gracefully.
-
-##### System Operations and Efficiency
-- Module Management: Added functionality to dynamically reload `functions.py`.
-- Event Logging: Introduced detailed event logging, capturing user interactions throughout the test.
-
-#### Minor Updates
-- Updated external links for data upload.
-- Minor text and display adjustments.
-- Optimized code for performance improvements.
-- Included more comments and docstrings for improved code readability.
-
-#### Bug Fixes
-- Addressed issues related to user inputs and data formatting.
-
 ### v1.0
 
 #### Initial Release Features
