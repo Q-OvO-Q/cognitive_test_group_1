@@ -14,7 +14,6 @@ The Approximate Number Sense (ANS) test tests the users ability to distinguish w
 ## ANS_test Directory Contents
 - images used in the test
 - ans_test_code.ipynb version 1.0
-- run_ans.ipynb version 1.0
   
 ## Test Instruction
 
