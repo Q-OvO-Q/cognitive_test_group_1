@@ -41,7 +41,6 @@ Click the link, then enter the Spatial_Test folder, finally open Cube-Test.ipynb
 
 ##### User Interface and Experience
 - Clearer Test Instructions: Revised the test instructions to provide clearer guidelines on how to do the test. 
-- Feedback Mechanism: Simplified the feedback collection process by directly mapping user feedback to the upload dictionary.
 - Better display of questions: using pictures instead of drawing the cubes so that all the options can be seen in one screen.
 - Hidden code chunks: put the functions and codes into seperate files to run the test without showing participants the code chunks. 
 
