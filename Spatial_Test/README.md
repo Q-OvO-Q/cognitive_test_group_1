@@ -29,41 +29,6 @@ Click the link, then enter the Spatial_Test folder, finally open Cube-Test.ipynb
 
 ## Update Log
 
-### v2.0
-
-#### Major Enhancements
-
-##### Improved User Interaction and Validation
-- Anonymized ID Collection: Introduced validation for the anonymized ID input to ensure it follows the specified format (4 alphabetic characters).
-
-##### Enhanced Test Functionality
-- Randomized Question Generation: Enhanced the question generation mechanism to avoid repeating the same question within a test session.
-
-##### User Interface and Experience
-- Clearer Test Instructions: Revised the test instructions to provide clearer guidelines on how to do the test. 
-- Better display of questions: using pictures instead of drawing the cubes so that all the options can be seen in one screen.
-- Hidden code chunks: put the functions and codes into seperate files to run the test without showing participants the code chunks. 
-
-##### Data Handling and Upload
-- Enhanced Data Structure: Introduced a more comprehensive data structure for storing test questions, answers, correctness, and time taken.
-
-##### System Operations and Efficiency
-- Module Management: Added functionality to dynamically reload the `functions` module.
-- Event Logging: Introduced detailed event logging, capturing user interactions and system events throughout the test.
-
-#### Minor Updates
-- added docstring for functions. 
-- added a waiting time of 2 seconds before cleaing ouput.
-- save and upload the data in json format instead of pd.dataframe.
-- used a sized text.
-- added a confirmation button at the end of the test.
-- more tidy up imports
-- more logical in-code comment
-- added a brief introduction at the very begining of the test.
-- check whether the input information is in the correct format, such as four characters for ID.
-- use button for the confirmation of data consent, instead of typing.
-
-
 ### v1.0
 
 #### Initial Release Features
