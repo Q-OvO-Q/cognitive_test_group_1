@@ -25,11 +25,7 @@ The Approximate Number Sense (ANS) test tests the users ability to distinguish w
   
 ## Usage
 
-Access this test through mybinder:
-
-https://mybinder.org/v2/gh/Q-OvO-Q/cognitive_test_group_1/HEAD
-
-Click the link, then enter the ANS_Test folder, finally open run_ans.ipynb.
+Download ANS_Test folder and open ans_test_code_v1.ipynb to start the test.
 
 ## Update Log
 
