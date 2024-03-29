@@ -25,7 +25,9 @@ Access this test through mybinder:
 
 https://mybinder.org/v2/gh/Q-OvO-Q/cognitive_test_group_1/HEAD
 
-Click the link, then enter the Memory_Test folder, finally open MemoryTest_V2.00ReleasePractise.ipynb. Run the code. After the second to last code runs, a panel of answers will show up. Click on any button until it panel of answers goes away. Then run the last cell containing the function memory_test(). This will start the final memory test. 
+Click the link, then enter the Memory_Test folder, finally open MemoryTest.ipynb. 
+
+Run the code. After the second to last code cell runs, a panel of answers will show up. Click on any button until it goes away. Then run the last cell containing the function memory_test(). This will start the final memory test. 
 
 ## Update Log
 
