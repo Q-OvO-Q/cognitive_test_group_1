@@ -32,6 +32,7 @@ Run the code. After the second to last code cell runs, a panel of answers will s
 ## Update Log
 
 ### v1.0
+
 #### Initial Release Features
 - The first stable release of the project, featuring basic functionality.
 - User-friendly interface for efficient navigation and operation.
@@ -39,3 +40,21 @@ Run the code. After the second to last code cell runs, a panel of answers will s
 #### Known Issues
 - Poor code readability.
 - Issues exporting to the spreadsheet. 
+
+### v2.0
+
+#### Major Enhancements 
+
+##### Improved User Interaction 
+- Anonymized ID Collection: Introduced validation for the anonymized ID input to ensure it follows the specified format (4 alphabetic characters).
+- Made Images and Text bigger so that it was more easily viewed on a screen.
+
+##### Enhanced Test Functionality 
+- Recorded the accuracy for each question. Recorded the time taken by the user to answer a question after each grid was displayed instead of the whole test which more accurately measures the time taken for each question.
+
+##### User Interface and Experience 
+- Labelled the grid with the names of the shapes to make it friendly for non-native english speakers.
+- Reported to the user whether they correctly or incorrectly answered a question after each question. 
+
+##### Enhanced Data Structure 
+- Introduced a more comprehensive data structure for storing test questions, answers, correctness, and time taken.
