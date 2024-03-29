@@ -13,7 +13,8 @@ The Approximate Number Sense (ANS) test tests the users ability to distinguish w
 
 ## ANS_test Directory Contents
 - images used in the test
-- ans_test_code.ipynb version 1.0
+- ans_test_code.ipynb version 2.0
+- run_ans.ipynb version 2.0
   
 ## Test Instruction
 
@@ -25,7 +26,7 @@ The Approximate Number Sense (ANS) test tests the users ability to distinguish w
   
 ## Usage
 
-Download ANS_Test folder and open ans_test_code_v1.ipynb to start the test.
+Download ANS_Test folder and open run_ans.ipynb to start the test.
 
 This test is not compatible with mybinder.
 
@@ -40,3 +41,21 @@ This test is not compatible with mybinder.
 #### Known Issues
 - Unclear instructions.
 - Poor code readability.
+
+### v2.0
+
+#### Major Enhancements
+
+##### Improved User Interaction
+- Anonymized ID Collection: Introduced validation for the anonymized ID input to ensure it follows the specified format (4 alphabetic characters).
+
+##### User Interface and Experience
+- Clearer Test Instructions: Revised the test instructions to provide clearer guidelines on how to submit answers and how long the participant has for each question.
+- Improved Feedback: Allows users to see their score on completion of the test.
+- Progress Tracking: Allows users to see their progress though the test.
+- Hidden code: The code is hidden from the user while taking the test.
+
+#### Minor Updates
+- Minor text and display adjustments.
+- Optimized code for performance improvements.
+- Included more comments and docstrings for improved code readability.
