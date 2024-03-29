@@ -27,6 +27,8 @@ The Approximate Number Sense (ANS) test tests the users ability to distinguish w
 
 Download ANS_Test folder and open ans_test_code_v1.ipynb to start the test.
 
+This test is not compatible with mybinder.
+
 ## Update Log
 
 ### v1.0
